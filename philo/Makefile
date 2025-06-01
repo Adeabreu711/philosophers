@@ -6,16 +6,16 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/05/16 22:04:01 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/06/01 20:47:03 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -g3 # -Wall -Wextra -Werror
+CFLAGS = -g3 #-Wall -Wextra -Werror
 
 SRC = \
-	main.c func_utils.c parsing.c debug.c
+	main.c func_utils.c parsing.c debug.c init_table.c
 
 INCLUDES = -Iincludes/
 

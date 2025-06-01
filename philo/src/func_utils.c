@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:27:47 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/05/16 21:26:30 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:40:06 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 }
 
 /**
- * @return A int corresponding to the given string, -1 if above limits.
+ * @return A long corresponding to the given string, -1 if above INT limits.
  * @exception The string cannot start with letters, have more than
  * two signs before the numbers or above INT_MAX / INT_MIN
- * @example "    +123ABC" Correct / "+-123ABC" Incorrect
  */
-int	ft_atoi_lmt(const char *nptr)
+long	ft_atol(const char *nptr)
 {
 	unsigned int	i;
 	long			temp;
@@ -80,8 +79,7 @@ int	ft_atoi_lmt(const char *nptr)
 			sign = -sign;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		temp *= 10;
-		temp += nptr[i] - '0';
+		temp = (temp * 10) + nptr[i] - '0';
 		i++;
 	}
 	if (temp > INT_MAX || temp < INT_MIN)

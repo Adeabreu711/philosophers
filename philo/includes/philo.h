@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/05/16 22:05:41 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:27:53 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,32 @@
 #include <sys/time.h>	//gettimeofday
 #include <limits.h>
 
-//./philo [philo_nb] [die_time] [eat_time] [die_time] [sleep_time] ([max_meals])
+typedef pthread_mutex_t t_mtx;
+typedef pthread_t t_thread;
+
+//./philo [philo_nb] [die_time] [eat_time] [sleep_time] ([max_meals])
 typedef struct	s_stgs
 {
 	int		philo_nb;
-	int		die_time;
-	int		eat_time;
-	int		sleep_time;
+	long	die_time;
+	long	eat_time;
+	long	sleep_time;
 	int		max_meals;
 }	t_stgs;
 
 typedef struct	s_philo
 {
-	int		id;
-	void	*l_fork;
-	void	*r_fork;
+	int			id;
+	int			eat_count;
+	long		last_meal_time;
+	void		*l_fork;
+	void		*r_fork;
+	t_thread	thrd_id;
 }	t_philo;
 
 typedef struct	s_fork
 {
+	t_mtx	mtx;
 	int		id;
 }	t_fork;
 
@@ -49,14 +56,16 @@ typedef struct	s_sim
 	t_philo	*philo;
 	t_fork	*fork;
 	long	start_time;
+	int		end_sim;
 }	t_sim;
 
 
-int		parse_simulation(t_sim *sim, int argc, char *argv[]);
+int		parse_settings(t_stgs *stgs, int argc, char *argv[]);
+int		init_table(t_sim *sim);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memmove(void *dest, const void *src, size_t n);
-int		ft_atoi_lmt(const char *nptr);
+long	ft_atol(const char *nptr);
 
 //DEBUG
 

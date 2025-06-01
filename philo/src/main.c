@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:40:31 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/05/16 21:58:34 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/01 20:54:37 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	main(int argc, char *argv[])
 {
 	t_sim	sim;
 
-	if (!parse_simulation(&sim, argc, argv))
+	if (!parse_settings(&sim.stgs, argc, argv))
+		return (0);
+	if (!init_table(&sim))
 		return (0);
 	printf("done\n");
 	return (1);
