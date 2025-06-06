@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/01 21:27:53 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:48:33 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct	s_sim
 }	t_sim;
 
 
+void	*routine(void);
+
 int		parse_settings(t_stgs *stgs, int argc, char *argv[]);
 int		init_table(t_sim *sim);
 
@@ -70,5 +72,6 @@ long	ft_atol(const char *nptr);
 //DEBUG
 
 void	debug_stgs(t_stgs *stgs);
+void	debug_philo(t_sim *sim);
 
 #endif

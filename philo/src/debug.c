@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:36:04 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/01 19:39:25 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:51:50 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ void	debug_stgs(t_stgs *stgs)
 		stgs->eat_time,
 		stgs->sleep_time,
 		stgs->max_meals);
+}
+
+void	debug_philo(t_sim *sim)
+{
+	int	i;
+
+	i = -1;
+	printf("___PHILOS___\n\n");
+	while (++i < sim->stgs.philo_nb)
+	{
+		printf ("philo [%i] : \nl_fork [%p]\nr_fork [%p]\n\n", i, sim->philo[i].l_fork, sim->philo[i].r_fork);
+	}
 }
 
 // void	debug_sim(t_sim	*sim)
