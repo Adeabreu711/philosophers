@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:36:04 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/02 17:51:50 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/07 11:03:33 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	debug_philo(t_sim *sim)
 	printf("___PHILOS___\n\n");
 	while (++i < sim->stgs.philo_nb)
 	{
-		printf ("philo [%i] : \nl_fork [%p]\nr_fork [%p]\n\n", i, sim->philo[i].l_fork, sim->philo[i].r_fork);
+		printf ("philo [%i] : \nl_fork [%p]\nr_fork [%p]\n\n", i, sim->philo[i].f_fork, sim->philo[i].s_fork);
 	}
 }
 

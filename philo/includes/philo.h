@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/06 17:13:27 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/07 11:03:45 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct	s_philo
 	int			id;
 	int			eat_count;
 	long		last_meal_time;
-	void		*l_fork;
-	void		*r_fork;
+	void		*f_fork;
+	void		*s_fork;
 	t_thread	thrd_id;
 	int			full;
 }	t_philo;

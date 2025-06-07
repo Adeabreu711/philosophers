@@ -6,22 +6,24 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/06 19:10:26 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/07 11:03:51 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	set_forks(t_philo *philo, t_fork *fork, int philo_nb, int p_id)
+static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 {
-	if (p_id % 2 == 1)
+	if ((i + 1) % 2 == 0)
 	{
-		philo[p_id].l_fork = &fork[p_id - 1];
-		philo[p_id].r_fork = &fork[p_id % (philo_nb)] ;
+		philo[i].f_fork = &forks[i];
+		philo[i].s_fork = &forks[(philo_nb + i - 1) % philo_nb];
+		//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, (philo_nb + i - 1) % philo_nb, i);
 		return ;
 	}
-	philo[p_id].l_fork = &fork[p_id % (philo_nb)] ;
-	philo[p_id].r_fork = &fork[p_id - 1];
+	philo[i].f_fork = &forks[(philo_nb + i - 1) % philo_nb];
+	philo[i].s_fork = &forks[i];
+	//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
 }
 
 static int	init_forks(t_fork *fork, int philo_nb)
@@ -54,11 +56,8 @@ static int	init_philos(t_philo *philo, t_fork *fork, int philo_nb)
 		philo[i].id = i + 1;
 		philo[i].eat_count = 0;
 		philo[i].last_meal_time = -1;
-		philo[i].l_fork = &fork[i];
-		philo[i].r_fork = &fork[(philo_nb + i - 1) % philo_nb];
-		// set_forks(philo, fork, philo_nb, philo[i].id);
 		philo[i].full = 0;
-		printf ("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
+		set_forks_addr(philo, fork, i, philo_nb);
 	}
 	return (1);
 }
