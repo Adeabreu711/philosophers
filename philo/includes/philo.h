@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/07 11:03:45 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/08 23:18:59 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ typedef struct	s_sim
 	t_stgs	stgs;
 	t_philo	*philo;
 	t_fork	*fork;
+	t_mtx	mtx;
 	long	start_time;
 	int		end_sim;
 }	t_sim;
 
-
-void	*routine(void);
+int		simulate_table(t_sim *sim);
+void	*routine(void *);
 
 int		parse_settings(t_stgs *stgs, int argc, char *argv[]);
 int		init_table(t_sim *sim);

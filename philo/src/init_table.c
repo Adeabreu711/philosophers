@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/07 11:03:51 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/08 23:41:14 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,38 @@ static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 	//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
 }
 
-static int	init_forks(t_fork *fork, int philo_nb)
+static int	init_forks(t_sim *sim)
 {
 	int	i;
 
 	i = -1;
-	fork = ft_calloc(philo_nb + 1, sizeof(t_fork));
+	sim->fork = ft_calloc(sim->stgs.philo_nb, sizeof(t_fork));
 	if (!fork)
 		return (0);
-	while (++i < philo_nb)
+	while (++i < sim->stgs.philo_nb)
 	{
-		fork[i].id = i;
-		if (pthread_mutex_init(&fork[i].mtx, NULL))
+		sim->fork[i].id = i;
+		if (pthread_mutex_init(&sim->fork[i].mtx, NULL))
 			return (0);
 	}
 	return (1);
 }
 
-static int	init_philos(t_philo *philo, t_fork *fork, int philo_nb)
+static int	init_philos(t_sim *sim)
 {
 	int	i;
 
 	i = -1;
-	philo = ft_calloc(philo_nb + 1, sizeof(t_philo));
-	if (!philo)
+	sim->philo = ft_calloc(sim->stgs.philo_nb, sizeof(t_philo));
+	if (!sim->philo)
 		return (0);
-	while (++i < philo_nb)
+	while (++i < sim->stgs.philo_nb)
 	{
-		philo[i].id = i + 1;
-		philo[i].eat_count = 0;
-		philo[i].last_meal_time = -1;
-		philo[i].full = 0;
-		set_forks_addr(philo, fork, i, philo_nb);
+		sim->philo[i].id = i + 1;
+		sim->philo[i].eat_count = 0;
+		sim->philo[i].last_meal_time = -1;
+		sim->philo[i].full = 0;
+		set_forks_addr(sim->philo, sim->fork, i, sim->stgs.philo_nb);
 	}
 	return (1);
 }
@@ -65,10 +65,11 @@ static int	init_philos(t_philo *philo, t_fork *fork, int philo_nb)
 int	init_table(t_sim *sim)
 {
 	sim->end_sim = 0;
-	if (!init_forks(sim->fork, sim->stgs.philo_nb))
+	if (pthread_mutex_init(&sim->mtx, NULL))
 		return (0);
-	if (!init_philos(sim->philo, sim->fork, sim->stgs.philo_nb))
+	if (!init_forks(sim))
 		return (0);
-	// debug_philo(sim);
+	if (!init_philos(sim))
+		return (0);
 	return (1);
 }

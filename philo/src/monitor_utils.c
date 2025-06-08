@@ -1,23 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   monitor_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/08 23:41:45 by alde-abr         ###   ########.fr       */
+/*   Created: 2025/06/08 23:08:18 by alde-abr          #+#    #+#             */
+/*   Updated: 2025/06/08 23:10:35 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	*routine(void *data)
-{
-	// t_philo	*philo;
-
-	// philo = (t_philo *)data;
-
-	printf ("test\n");
-	return (NULL);
-}
