@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/08 23:41:14 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/10 23:01:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static int	init_philos(t_sim *sim)
 int	init_table(t_sim *sim)
 {
 	sim->end_sim = 0;
+	sim->start_time = -1;
+	sim->threads_ready = 0;
 	if (pthread_mutex_init(&sim->mtx, NULL))
 		return (0);
 	if (!init_forks(sim))

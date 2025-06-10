@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/08 23:18:59 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/10 23:01:15 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>	//usleep
 # include <pthread.h>	//MUTEX : init; destroy; lock; unlock;
 						//THREADS : create; join; detach;
-#include <sys/time.h>	//gettimeofday
+#include "time.h"
 #include <limits.h>
 
 typedef pthread_mutex_t t_mtx;
@@ -58,6 +58,7 @@ typedef struct	s_sim
 	t_fork	*fork;
 	t_mtx	mtx;
 	long	start_time;
+	int		threads_ready;
 	int		end_sim;
 }	t_sim;
 
@@ -67,9 +68,18 @@ void	*routine(void *);
 int		parse_settings(t_stgs *stgs, int argc, char *argv[]);
 int		init_table(t_sim *sim);
 
+//GET/SET
+long	get_lmtx(t_mtx *mtx, long *addr);
+int		get_imtx(t_mtx *mtx, int *addr);
+int		set_lmtx(t_mtx *mtx, long *addr, const long new_nb);
+int		set_imtx(t_mtx *mtx, int *addr, const int new_nb);
+
+//OTHERS
+
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 long	ft_atol(const char *nptr);
+
 
 //DEBUG
 

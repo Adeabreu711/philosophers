@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:46:10 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/06 18:42:36 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/09 15:49:00 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ int	parse_settings(t_stgs *stgs, int argc, char *argv[])
 		return (printf(ER_FRMT), 0);
 	if (!set_stgs(stgs, argc, argv))
 		return (printf(ER_STGS), 0);
-	debug_stgs(stgs);
+	debug_stgs(stgs); //DEBUG
 	return (1);
 }

@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   time.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/10 22:03:20 by alex             ###   ########.fr       */
+/*   Created: 2025/06/09 15:50:23 by alex              #+#    #+#             */
+/*   Updated: 2025/06/10 21:59:17 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#ifndef TIME_H
+# define TIME_H
 
-void	*routine(void *data)
+#include <sys/time.h>
+
+typedef enum time_unit
 {
-	t_philo	*philo;
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}time_unit;
 
-	philo = (t_philo *)data;
+long	get_time(time_unit unit);
 
-	printf ("thread time : %li\n", get_time(MICROSECOND));
-	printf ("test\n");
-	return (NULL);
-}
+#endif

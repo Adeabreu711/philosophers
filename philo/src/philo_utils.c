@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/10 22:03:20 by alex             ###   ########.fr       */
+/*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
+/*   Updated: 2025/06/10 23:01:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*routine(void *data)
+int	synchronize_threads(t_sim *sim)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-
-	printf ("thread time : %li\n", get_time(MICROSECOND));
-	printf ("test\n");
-	return (NULL);
+	while (!get_imtx(&sim->mtx, sim->threads_ready))
+		continue ;
+	return (1);
 }

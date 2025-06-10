@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/10 22:03:20 by alex             ###   ########.fr       */
+/*   Created: 2025/06/09 15:49:24 by alex              #+#    #+#             */
+/*   Updated: 2025/06/10 21:59:12 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/time.h"
+#include <stdio.h>
 
-void	*routine(void *data)
+long	get_time(time_unit unit)
 {
-	t_philo	*philo;
+	struct timeval	tmvl;
+	long			micro;
 
-	philo = (t_philo *)data;
-
-	printf ("thread time : %li\n", get_time(MICROSECOND));
-	printf ("test\n");
-	return (NULL);
+	if (gettimeofday(&tmvl, 0))
+		return (0);
+	micro = (tmvl.tv_sec * 1e6) + tmvl.tv_usec;
+	if (unit == SECOND)
+		return (micro / (long)1e6);
+	if (unit == MILLISECOND)
+		return (micro / (long)1e3);
+	if (unit == MICROSECOND)
+			return (micro);
+	return (-1);
 }
