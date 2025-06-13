@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:40:31 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/10 22:04:32 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/13 17:44:22 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int	main(int argc, char *argv[])
 {
-	t_sim	sim;
+	t_sim	*sim;
 
-	if (!parse_settings(&sim.stgs, argc, argv) || !init_table(&sim))
+	sim = ft_calloc(1, sizeof(t_sim));
+	if (!sim)
 		return (0);
-	if (!simulate_table(&sim))
+	if (!parse_settings(&sim->stgs, argc, argv) || !init_table(sim))
+		return (0);
+	if (!simulate_table(sim))
 		return (0);
 	return (1);
 }

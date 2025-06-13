@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:23:05 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/10 22:24:11 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/13 22:54:06 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	set_imtx(t_mtx *mtx, int *addr, const int new_nb)
 	*addr = new_nb;
 	if (pthread_mutex_unlock(mtx))
 		return (0);
+	return (1);
 }
 
 // return 1 on success, 0 on failure
@@ -30,6 +31,7 @@ int	set_lmtx(t_mtx *mtx, long *addr, const long new_nb)
 	*addr = new_nb;
 	if (pthread_mutex_unlock(mtx))
 		return (0);
+	return (1);
 }
 
 // return addr value on success, 0 on failure

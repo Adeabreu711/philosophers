@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:49:24 by alex              #+#    #+#             */
-/*   Updated: 2025/06/10 21:59:12 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/13 22:54:19 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/time.h"
 #include <stdio.h>
 
-long	get_time(time_unit unit)
+long	get_time(t_time_unit unit)
 {
 	struct timeval	tmvl;
 	long			micro;
