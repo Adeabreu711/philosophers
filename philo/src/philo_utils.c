@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/06/13 23:55:13 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:59:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-int	synchronize_threads(t_sim *sim)
-{
-	while (get_imtx(&sim->mtx, &sim->threads_ready) == -1)
-		continue ;
-	if (!get_imtx(&sim->mtx, &sim->threads_ready))
-		return (0);
-	return (1);
-}
 
 int	philo_usleep(long usec, t_sim *sim)
 {
@@ -55,6 +46,8 @@ int	eat(t_philo *philo)
 	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND))
 		|| !write_status(philo, EAT))
 		return (0);
+	philo->eat_count++;
+	philo->last_meal_time = get_time(MILLISECOND);
 	if (!philo_usleep(philo->sim->stgs.eat_time, philo->sim))
 		return (0);
 	if (philo->sim->stgs.max_meals > 0
@@ -94,7 +87,7 @@ int	write_status(t_philo *philo, t_status status)
 	else if (status == GRAB_S_FORK && end_sim == -1)
 		printf("[%-6lims] %i has taken his second fork, id [%i]\n", time, philo->id, philo->s_fork->id); //DEBUG
 	else if (status == EAT && end_sim == -1)
-		printf("[%-6lims] %i is eating\n", time, philo->id);
+		printf("[%-6lims] %i is eating, [count : %i]\n", time, philo->id, philo->eat_count + 1);
 	else if (status == SLEEP && end_sim == -1)
 		printf("[%-6lims] %i is sleeping\n", time, philo->id);
 	else if (status == THINK && end_sim == -1)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
+#    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/06/13 16:49:51 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/06/14 16:05:47 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -g3 #-Wall -Wextra -Werror
 
 SRC = \
 	main.c func_utils.c parsing.c debug.c init_table.c simulation.c \
-	mutex_utils.c routine.c time_utils.c philo_utils.c
+	mutex_utils.c routine.c time_utils.c philo_utils.c routine_utils.c
 
 INCLUDES = -Iincludes/
 

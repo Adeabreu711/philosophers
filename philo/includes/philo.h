@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/13 23:26:53 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:58:20 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,44 @@ typedef struct	s_philo
 
 struct	s_sim
 {
-	t_stgs	stgs;
-	t_philo	*philo;
-	t_fork	*fork;
-	t_mtx	mtx;
-	t_mtx	output_mtx;
-	long	start_time;
-	int		threads_ready;
-	int		end_sim;
+	t_stgs		stgs;
+	t_philo		*philo;
+	t_fork		*fork;
+	t_mtx		mtx;
+	t_mtx		output_mtx;
+	t_thread	monitor;
+	long		start_time;
+	int			threads_ready;
+	int			end_sim;
 };
 
 int		simulate_table(t_sim *sim);
-void	*routine(void *);
+
+//ROUTINES
+
+void	*philo_routine(void *data);
+void	*monitor_routine(void *data);
+
+//ROUTINE UTILS
+
+int		synchronize_threads(t_sim *sim, int value);
+int		check_death(t_philo *philo);
+
+//PARSING
 
 int		parse_settings(t_stgs *stgs, int argc, char *argv[]);
 int		init_table(t_sim *sim);
 
 //PHILO UTILS
 
-int	synchronize_threads(t_sim *sim);
-int	philo_usleep(long usec, t_sim *sim);
-int	write_status(t_philo *philo, t_status status);
-int	eat(t_philo *philo);
-int	think(t_philo *philo);
+int		philo_usleep(long usec, t_sim *sim);
+int		write_status(t_philo *philo, t_status status);
+int		eat(t_philo *philo);
+int		think(t_philo *philo);
 
 //GET/SET
+
+int		add_imtx(t_mtx *mtx, int *addr, const int to_add);
 long	get_lmtx(t_mtx *mtx, long *addr);
 int		get_imtx(t_mtx *mtx, int *addr);
 int		set_lmtx(t_mtx *mtx, long *addr, const long new_nb);

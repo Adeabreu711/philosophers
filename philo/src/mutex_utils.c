@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:23:05 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/13 22:54:06 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:40:17 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+// add the given int "to_add" to the pointed value "*addr".
+// return 1 on success, 0 on failure
+int	add_imtx(t_mtx *mtx, int *addr, const int to_add)
+{
+	if (pthread_mutex_lock(mtx))
+		return (0);
+	*addr += to_add;
+	if (pthread_mutex_unlock(mtx))
+		return (0);
+	return (1);
+}
 
 // return 1 on success, 0 on failure
 int	set_imtx(t_mtx *mtx, int *addr, const int new_nb)

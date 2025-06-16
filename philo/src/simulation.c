@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 20:33:39 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/13 23:09:57 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:54:35 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ static int start_simulation(t_sim *sim)
 	i = -1;
 	while (++i < sim->stgs.philo_nb)
 	{
-		if (pthread_create(&sim->philo[i].thrd_id, NULL, routine, &sim->philo[i]))
+		if (pthread_create(&sim->philo[i].thrd_id, NULL, philo_routine, &sim->philo[i]))
 			return (0);
 	}
 	sim->start_time = get_time(MILLISECOND);
+	if (pthread_create(&sim->monitor, NULL, monitor_routine, &sim))
+		return (0);
 	if (!set_imtx(&sim->mtx, &sim->threads_ready, 1))
 		return (0);
 	return (1);
@@ -45,6 +47,8 @@ int	simulate_table(t_sim *sim)
 	if (!start_simulation(sim))
 		return (0);
 	if (!check_philos_full(sim))
+		return (0);
+	if (pthread_join(sim->monitor, NULL))
 		return (0);
 	return (1);
 }

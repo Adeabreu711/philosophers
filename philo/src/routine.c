@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/13 23:52:12 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:55:24 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*routine(void *data)
+void	*philo_routine(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-
-	if (!synchronize_threads(philo->sim))
-		return (0);
-	//set last meal;
-
-	//printf("philo [%i] : f_fork [%i], s_fork [%i]\n", philo->id, philo->f_fork->id, philo->s_fork->id);
+	if (!synchronize_threads(philo->sim, 1))
+		return (NULL);
+	if (!add_imtx(&philo->sim->mtx, &philo->sim->threads_ready, 1))
+		return (NULL);
+	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND)))
+		return (NULL);
 	while (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == -1)
 	{
 		if (philo->full == 1)
@@ -33,7 +33,32 @@ void	*routine(void *data)
 			return (NULL);
 		think(philo);
 	}
-	if (!get_imtx(&philo->sim->mtx, &philo->sim->end_sim))
+	return (NULL);
+}
+
+void	*monitor_routine(void *data)
+{
+	int		i;
+	t_sim	*sim;
+	int		is_dead;
+
+	i = -1;
+	sim = data;
+	// if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
+	// 	return (NULL);
+	// set_imtx(&sim->mtx, &sim->threads_ready, 69);
+	while (1)
+	{
+		printf("test\n");
+		while (++i < sim->stgs.philo_nb)
+		{
+			printf("test\n");
+			is_dead = check_death(&sim->philo[i]);
+			if (!is_dead == -1 || is_dead == 1)
+				return (NULL);
+		}
 		return (NULL);
+		i = -1;
+	}
 	return (NULL);
 }
