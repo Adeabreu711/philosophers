@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/06/14 17:59:31 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/16 19:44:01 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	write_status(t_philo *philo, t_status status)
 	else if (status == THINK && end_sim == -1)
 		printf("[%-6lims] %i is thinking\n", time, philo->id);
 	else if (status == DEAD)
-		printf("[%-6lims] %i is Dead\n", time, philo->id);
+		printf("[%-6lims] %i is Dead, last meal :%li, duration : %li\n", time, philo->id, philo->last_meal_time, time - philo->last_meal_time);
 	if (pthread_mutex_unlock(&philo->sim->output_mtx))
 		return (0);
 	return (1);

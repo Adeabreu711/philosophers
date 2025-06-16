@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/14 17:55:24 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/16 19:31:18 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,23 @@ void	*monitor_routine(void *data)
 {
 	int		i;
 	t_sim	*sim;
-	int		is_dead;
 
 	i = -1;
 	sim = data;
-	// if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
-	// 	return (NULL);
-	// set_imtx(&sim->mtx, &sim->threads_ready, 69);
-	while (1)
+	if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
+		return (NULL);
+	while (get_imtx(&sim->mtx, &sim->end_sim) == -1)
 	{
-		printf("test\n");
 		while (++i < sim->stgs.philo_nb)
 		{
-			printf("test\n");
-			is_dead = check_death(&sim->philo[i]);
-			if (!is_dead == -1 || is_dead == 1)
+			if (check_death(&sim->philo[i]) == 1)
+			{
+				if (!set_imtx(&sim->mtx, &sim->end_sim, 1))
+					return (NULL);
+				write_status(&sim->philo[i], DEAD);
 				return (NULL);
+			}
 		}
-		return (NULL);
 		i = -1;
 	}
 	return (NULL);

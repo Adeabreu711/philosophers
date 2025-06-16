@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:03:45 by alex              #+#    #+#             */
-/*   Updated: 2025/06/14 17:42:35 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/16 19:39:56 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	check_death(t_philo *philo)
 	long	time;
 	long	lst_meal_t;
 
-	if (get_imtx(&philo->mtx, &philo->full) == -1)
+	if (get_imtx(&philo->mtx, &philo->full) == 1)
 		return (0);
 	lst_meal_t = get_lmtx(&philo->mtx, &philo->last_meal_time);
 	time = get_time(MILLISECOND);
 	if (!time || !lst_meal_t)
 		return (-1);
-	printf("philo %i : time before death %li\n", philo->id, philo->last_meal_time);
-	if ((time - lst_meal_t) > philo->sim->stgs.die_time)
+	//printf("philo %i : time before death %li / %li\n", philo->id, time - lst_meal_t, philo->sim->stgs.die_time);
+	if ((time - lst_meal_t) > philo->sim->stgs.die_time / 1e3)
 		return (1);
 	return (0);
 }
