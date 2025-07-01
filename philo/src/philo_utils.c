@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/06/18 17:57:18 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:07:48 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,25 @@ int	write_status(t_philo *philo, t_status status)
 	if (philo->full)
 		return (1);
 	end_sim = get_imtx(&philo->sim->mtx, &philo->sim->end_sim);
-	time = get_time(MILLISECOND);
-	if (pthread_mutex_lock(&philo->sim->output_mtx) || !end_sim || !time)
+	time = get_time(MILLISECOND) - get_lmtx(&philo->sim->mtx, &philo->sim->start_time);
+	if (pthread_mutex_lock(&philo->sim->output_mtx) || !end_sim || time < 0)
 		return (0);
-	// if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
-	// 	printf("[%-6lims] %i has taken a fork\n", time, philo->id);
-	if (status == GRAB_F_FORK && end_sim == -1)
-		printf("[%-6lims] %i has taken his first fork, id [%i]\n", time, philo->id, philo->f_fork->id); //DEBUG
-	else if (status == GRAB_S_FORK && end_sim == -1)
-		printf("[%-6lims] %i has taken his second fork, id [%i]\n", time, philo->id, philo->s_fork->id); //DEBUG
+	if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
+		printf("%li %i has taken a fork\n", time, philo->id);
+	// if (status == GRAB_F_FORK && end_sim == -1)
+	// 	printf("%li %i has taken his first fork, id [%i]\n", time, philo->id, philo->f_fork->id); //DEBUG
+	// else if (status == GRAB_S_FORK && end_sim == -1)
+	// 	printf("%li %i has taken his second fork, id [%i]\n", time, philo->id, philo->s_fork->id); //DEBUG
+	// else if (status == EAT && end_sim == -1)
+	// 	printf("%li %i is eating, [count : %i]\n", time, philo->id, philo->eat_count + 1);
 	else if (status == EAT && end_sim == -1)
-		printf("[%-6lims] %i is eating, [count : %i]\n", time, philo->id, philo->eat_count + 1);
+		printf("%li %i is eating\n", time, philo->id);
 	else if (status == SLEEP && end_sim == -1)
-		printf("[%-6lims] %i is sleeping\n", time, philo->id);
+		printf("%li %i is sleeping\n", time, philo->id);
 	else if (status == THINK && end_sim == -1)
-		printf("[%-6lims] %i is thinking\n", time, philo->id);
+		printf("%li %i is thinking\n", time, philo->id);
 	else if (status == DEAD)
-		printf("[%-6lims] %i is Dead, last meal :%li, duration : %li\n", time, philo->id, philo->last_meal_time, time - philo->last_meal_time);
+		printf("%li %i is dead\n", time, philo->id);
 	if (pthread_mutex_unlock(&philo->sim->output_mtx))
 		return (0);
 	return (1);

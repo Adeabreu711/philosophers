@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 20:33:39 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:24:55 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/01 13:52:28 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
 static int	one_philo_case(t_sim *sim)
 {
 	if (pthread_create(&sim->philo[0].thrd_id, NULL, philo_alone, &sim->philo[0]))

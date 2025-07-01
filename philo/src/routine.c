@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/06/18 18:23:59 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:13:35 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*philo_alone(void *data)
 		return (NULL);
 	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND)))
 		return (NULL);
-	if (write_status(philo, GRAB_F_FORK))
+	if (!write_status(philo, GRAB_F_FORK))
 		return (NULL);
 	while (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == -1)
 		usleep(200);
@@ -63,7 +63,7 @@ void	*monitor_routine(void *data)
 	sim = data;
 	if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
 		return (NULL);
-	printf("start time : %li\n", sim->start_time);
+	// printf("start time : %li\n", sim->start_time);
 	while (get_imtx(&sim->mtx, &sim->end_sim) == -1)
 	{
 		while (++i < sim->stgs.philo_nb)
@@ -78,6 +78,5 @@ void	*monitor_routine(void *data)
 		}
 		i = -1;
 	}
-	printf("end of the monitor\n");
 	return (NULL);
 }
