@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/14 16:58:20 by alex             ###   ########.fr       */
+/*   Updated: 2025/06/18 17:14:51 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		simulate_table(t_sim *sim);
 //ROUTINES
 
 void	*philo_routine(void *data);
+void	*philo_alone(void *data);
 void	*monitor_routine(void *data);
 
 //ROUTINE UTILS
