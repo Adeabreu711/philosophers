@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:46:10 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:16:18 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/02 16:23:25 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_args(int argc, char *argv[])
 	{
 		while (argv[j][++i])
 		{
-			if (!i, (argv[j][i] == '+' || argv[j][i] == '-'))
+			if (!i && (argv[j][i] == '+' || argv[j][i] == '-'))
 				continue ;
 			else if ((argv[j][i] < '0' || argv[j][i] > '9'))
 				return (0);

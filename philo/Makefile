@@ -6,13 +6,13 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/06/14 16:05:47 by alex             ###   ########.fr        #
+#    Updated: 2025/07/02 16:22:51 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -g3 #-Wall -Wextra -Werror
+CFLAGS = -g3 -Wall -Wextra -Werror
 
 SRC = \
 	main.c func_utils.c parsing.c debug.c init_table.c simulation.c \

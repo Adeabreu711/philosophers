@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/02 16:15:03 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/02 16:24:09 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	think(t_philo *philo)
 		return (0);
 	if (!write_status(philo, THINK))
 		return (0);
+	return (1);
 }
 
 int	write_status(t_philo *philo, t_status status)
