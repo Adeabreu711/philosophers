@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/13 23:47:13 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:11:09 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 	{
 		philo[i].f_fork = &forks[i];
 		philo[i].s_fork = &forks[(philo_nb + i - 1) % philo_nb];
-		printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, (philo_nb + i - 1) % philo_nb, i);
+		//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, (philo_nb + i - 1) % philo_nb, i);
 		return ;
 	}
 	philo[i].f_fork = &forks[(philo_nb + i - 1) % philo_nb];
 	philo[i].s_fork = &forks[i];
-	printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
+	//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
 }
 
 static int	init_forks(t_sim *sim)

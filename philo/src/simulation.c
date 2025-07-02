@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 20:33:39 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/01 13:52:28 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:05:59 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	one_philo_case(t_sim *sim)
 {
-	if (pthread_create(&sim->philo[0].thrd_id, NULL, philo_alone, &sim->philo[0]))
-			return (0);
+	if (pthread_create(&sim->philo[0].thrd_id, NULL,
+			philo_alone, &sim->philo[0]))
+		return (0);
 	sim->start_time = get_time(MILLISECOND);
 	if (pthread_create(&sim->monitor, NULL, monitor_routine, sim))
 		return (0);
@@ -24,7 +25,7 @@ static int	one_philo_case(t_sim *sim)
 	return (1);
 }
 
-static int	check_philos_full(t_sim * sim)
+static int	check_philos_full(t_sim *sim)
 {
 	int	i;
 
@@ -37,14 +38,15 @@ static int	check_philos_full(t_sim * sim)
 	return (1);
 }
 
-static int start_simulation(t_sim *sim)
+static int	start_simulation(t_sim *sim)
 {
 	int	i;
 
 	i = -1;
 	while (++i < sim->stgs.philo_nb)
 	{
-		if (pthread_create(&sim->philo[i].thrd_id, NULL, philo_routine, &sim->philo[i]))
+		if (pthread_create(&sim->philo[i].thrd_id, NULL,
+				philo_routine, &sim->philo[i]))
 			return (0);
 	}
 	sim->start_time = get_time(MILLISECOND);
@@ -57,7 +59,6 @@ static int start_simulation(t_sim *sim)
 
 int	simulate_table(t_sim *sim)
 {
-
 	if (sim->stgs.philo_nb == 1)
 	{
 		if (!one_philo_case(sim))

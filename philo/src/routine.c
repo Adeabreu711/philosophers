@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/07/01 14:13:35 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:07:34 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*philo_routine(void *data)
 	while (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == -1)
 	{
 		if (philo->full == 1)
-			break;
+			break ;
 		eat(philo);
 		if (!write_status(philo, SLEEP)
 			|| !philo_usleep(philo->sim->stgs.sleep_time, philo->sim))
@@ -63,7 +63,6 @@ void	*monitor_routine(void *data)
 	sim = data;
 	if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
 		return (NULL);
-	// printf("start time : %li\n", sim->start_time);
 	while (get_imtx(&sim->mtx, &sim->end_sim) == -1)
 	{
 		while (++i < sim->stgs.philo_nb)
@@ -73,7 +72,7 @@ void	*monitor_routine(void *data)
 				if (!set_imtx(&sim->mtx, &sim->end_sim, 1))
 					return (NULL);
 				write_status(&sim->philo[i], DEAD);
-				break;
+				break ;
 			}
 		}
 		i = -1;

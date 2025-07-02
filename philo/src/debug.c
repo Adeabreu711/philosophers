@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:36:04 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/06/13 23:56:58 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:10:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
 void	debug_stgs(t_stgs *stgs)
 {
 	printf("___SETTINGS___\n\n");

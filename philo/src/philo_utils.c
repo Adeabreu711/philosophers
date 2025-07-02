@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/01 14:07:48 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:15:03 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,19 @@ int	philo_usleep(long usec, t_sim *sim)
 			return (0);
 		rem = usec - (get_time(MICROSECOND) - start);
 		if (rem <= 0)
-			break;
+			break ;
 		if (rem > 1e3)
 			usleep(rem / 2);
 		else
-			;
+			continue ;
 	}
 	return (1);
 }
 
 int	eat(t_philo *philo)
 {
+	if (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == 1)
+		return (0);
 	if (pthread_mutex_lock(&philo->f_fork->mtx)
 		|| !write_status(philo, GRAB_F_FORK))
 		return (0);
@@ -64,6 +66,8 @@ int	eat(t_philo *philo)
 
 int	think(t_philo *philo)
 {
+	if (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == 1)
+		return (0);
 	if (!write_status(philo, THINK))
 		return (0);
 }
@@ -73,21 +77,15 @@ int	write_status(t_philo *philo, t_status status)
 	int		end_sim;
 	long	time;
 
-	//printf("philo [%i] : f_fork [%i], s_fork [%i]\n", philo->id, philo->f_fork->id, philo->s_fork->id);
 	if (philo->full)
 		return (1);
 	end_sim = get_imtx(&philo->sim->mtx, &philo->sim->end_sim);
-	time = get_time(MILLISECOND) - get_lmtx(&philo->sim->mtx, &philo->sim->start_time);
+	time = get_time(MILLISECOND)
+		- get_lmtx(&philo->sim->mtx, &philo->sim->start_time);
 	if (pthread_mutex_lock(&philo->sim->output_mtx) || !end_sim || time < 0)
 		return (0);
 	if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
 		printf("%li %i has taken a fork\n", time, philo->id);
-	// if (status == GRAB_F_FORK && end_sim == -1)
-	// 	printf("%li %i has taken his first fork, id [%i]\n", time, philo->id, philo->f_fork->id); //DEBUG
-	// else if (status == GRAB_S_FORK && end_sim == -1)
-	// 	printf("%li %i has taken his second fork, id [%i]\n", time, philo->id, philo->s_fork->id); //DEBUG
-	// else if (status == EAT && end_sim == -1)
-	// 	printf("%li %i is eating, [count : %i]\n", time, philo->id, philo->eat_count + 1);
 	else if (status == EAT && end_sim == -1)
 		printf("%li %i is eating\n", time, philo->id);
 	else if (status == SLEEP && end_sim == -1)

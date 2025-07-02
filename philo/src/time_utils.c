@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:49:24 by alex              #+#    #+#             */
-/*   Updated: 2025/06/14 15:58:28 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/02 16:10:07 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ long	get_time(t_time_unit unit)
 	if (unit == MILLISECOND)
 		return (micro / (long)1e3);
 	if (unit == MICROSECOND)
-			return (micro);
+		return (micro);
 	return (-1);
 }
