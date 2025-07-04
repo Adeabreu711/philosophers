@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:11:09 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/04 14:19:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 	{
 		philo[i].f_fork = &forks[i];
 		philo[i].s_fork = &forks[(philo_nb + i - 1) % philo_nb];
-		//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, (philo_nb + i - 1) % philo_nb, i);
 		return ;
 	}
 	philo[i].f_fork = &forks[(philo_nb + i - 1) % philo_nb];
 	philo[i].s_fork = &forks[i];
-	//printf("Philo [%i] : l_fork[%i], r_fork[%i]\n", i, i, (philo_nb + i - 1) % philo_nb);
 }
 
 static int	init_forks(t_sim *sim)
@@ -76,6 +74,5 @@ int	init_table(t_sim *sim)
 		return (0);
 	if (!init_philos(sim))
 		return (0);
-	debug_philo(sim);
 	return (1);
 }

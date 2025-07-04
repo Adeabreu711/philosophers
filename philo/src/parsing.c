@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:46:10 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:23:25 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/04 14:18:46 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,5 @@ int	parse_settings(t_stgs *stgs, int argc, char *argv[])
 		return (printf(ER_FRMT), 0);
 	if (!set_stgs(stgs, argc, argv))
 		return (printf(ER_STGS), 0);
-	debug_stgs(stgs); //DEBUG
 	return (1);
 }

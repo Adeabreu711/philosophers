@@ -6,7 +6,7 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/07/02 16:22:51 by alex             ###   ########.fr        #
+#    Updated: 2025/07/04 14:18:25 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc
 CFLAGS = -g3 -Wall -Wextra -Werror
 
 SRC = \
-	main.c func_utils.c parsing.c debug.c init_table.c simulation.c \
+	main.c func_utils.c parsing.c init_table.c simulation.c \
 	mutex_utils.c routine.c time_utils.c philo_utils.c routine_utils.c
 
 INCLUDES = -Iincludes/
