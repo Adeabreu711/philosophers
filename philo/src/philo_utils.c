@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/02 16:24:09 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/04 14:13:21 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ int	write_status(t_philo *philo, t_status status)
 
 	if (philo->full)
 		return (1);
+	if (pthread_mutex_lock(&philo->sim->output_mtx))
+		return (0);
 	end_sim = get_imtx(&philo->sim->mtx, &philo->sim->end_sim);
 	time = get_time(MILLISECOND)
 		- get_lmtx(&philo->sim->mtx, &philo->sim->start_time);
-	if (pthread_mutex_lock(&philo->sim->output_mtx) || !end_sim || time < 0)
+	if (!end_sim || time < 0)
 		return (0);
 	if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
 		printf("%li %i has taken a fork\n", time, philo->id);
