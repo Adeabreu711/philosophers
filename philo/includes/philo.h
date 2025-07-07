@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:17:41 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:25:47 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	*monitor_routine(void *data);
 
 //ROUTINE UTILS
 
+int		adapt_fairness(t_philo *philo);
 int		synchronize_threads(t_sim *sim, int value);
 int		check_death(t_philo *philo);
 
@@ -99,7 +100,7 @@ int		init_table(t_sim *sim);
 int		philo_usleep(long usec, t_sim *sim);
 int		write_status(t_philo *philo, t_status status);
 int		eat(t_philo *philo);
-int		think(t_philo *philo);
+int		think(t_philo *philo, int init);
 
 //GET/SET
 

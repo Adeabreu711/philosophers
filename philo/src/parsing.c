@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:46:10 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:18:46 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:37:16 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #define ER_ARGC "\033[31mError :\033[0m invalid arguments size.\n"
 #define ER_FRMT "\033[31mError :\033[0m wrong format in arguments\n"
 
+// Check if the given args are valid.
+// return 1 if valid, else return 0.
 static int	check_args(int argc, char *argv[])
 {
 	int	i;
@@ -36,6 +38,7 @@ static int	check_args(int argc, char *argv[])
 	return (1);
 }
 
+// Convert and set all args values to the settings "stgs" struct.
 static int	set_stgs(t_stgs *stgs, int argc, char *argv[])
 {
 	stgs->philo_nb = (int)ft_atol(argv[1]);
@@ -51,6 +54,7 @@ static int	set_stgs(t_stgs *stgs, int argc, char *argv[])
 	return (1);
 }
 
+// Parse all the args in the settings "stgs" struct.
 int	parse_settings(t_stgs *stgs, int argc, char *argv[])
 {
 	if (argc < 5 || argc > 6)

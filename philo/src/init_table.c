@@ -6,12 +6,15 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:19:31 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:42:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Set the philo first and second fork.
+// Even philos -> first fork [left], second fork [right].
+// Odd  philos -> first fork [right], second fork [left].
 static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 {
 	if ((i + 1) % 2 == 0)
@@ -24,6 +27,7 @@ static void	set_forks_addr(t_philo *philo, t_fork *forks, int i, int philo_nb)
 	philo[i].s_fork = &forks[i];
 }
 
+// Initialize all forks by giving them an id and a mutex.
 static int	init_forks(t_sim *sim)
 {
 	int	i;
@@ -41,6 +45,7 @@ static int	init_forks(t_sim *sim)
 	return (1);
 }
 
+// Initialize all philos variables.
 static int	init_philos(t_sim *sim)
 {
 	int	i;
@@ -63,6 +68,7 @@ static int	init_philos(t_sim *sim)
 	return (1);
 }
 
+// Initialize all the simulation "sim" struct.
 int	init_table(t_sim *sim)
 {
 	sim->end_sim = -1;

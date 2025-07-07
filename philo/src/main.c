@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:40:31 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/01 14:13:26 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/05 13:41:14 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Free all the allocated memory in the simulation struct.
 int	free_sim(t_sim *sim)
 {
 	if (!sim)
@@ -24,6 +25,7 @@ int	free_sim(t_sim *sim)
 	return (1);
 }
 
+// Philosophers mandatory part.
 int	main(int argc, char *argv[])
 {
 	t_sim	*sim;

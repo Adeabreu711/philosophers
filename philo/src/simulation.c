@@ -6,12 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 20:33:39 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:05:59 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/05 13:39:19 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Init the philo_alone thread and the monitor thread.
+// Set start time and threads_ready.
 static int	one_philo_case(t_sim *sim)
 {
 	if (pthread_create(&sim->philo[0].thrd_id, NULL,
@@ -25,6 +27,7 @@ static int	one_philo_case(t_sim *sim)
 	return (1);
 }
 
+// Join all threads, waiting for them to finish.
 static int	check_philos_full(t_sim *sim)
 {
 	int	i;
@@ -38,6 +41,8 @@ static int	check_philos_full(t_sim *sim)
 	return (1);
 }
 
+// Init all the philos threads and the monitor thread.
+// Set start time and threads_ready.
 static int	start_simulation(t_sim *sim)
 {
 	int	i;
@@ -57,6 +62,8 @@ static int	start_simulation(t_sim *sim)
 	return (1);
 }
 
+// Simulate the diner until an error occur, a philo die
+// or a all philos are full.
 int	simulate_table(t_sim *sim)
 {
 	if (sim->stgs.philo_nb == 1)

@@ -6,12 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:03:45 by alex              #+#    #+#             */
-/*   Updated: 2025/07/02 16:23:48 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:33:15 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Loop until the given threads_ready value is reached.
+// Threads_ready == 0 is an error.
 int	synchronize_threads(t_sim *sim, int value)
 {
 	if (!get_imtx(&sim->mtx, &sim->threads_ready))
@@ -21,6 +23,31 @@ int	synchronize_threads(t_sim *sim, int value)
 	return (1);
 }
 
+// Create a time interval between pair philos and odds
+int	adapt_fairness(t_philo *philo)
+{
+	if (philo->sim->stgs.philo_nb % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+		{
+			if (!philo_usleep(3e4, philo->sim))
+				return (0);
+		}
+	}
+	else
+	{
+		if (philo->id % 2)
+		{
+			if (!think(philo, 1))
+				return (0);
+		}
+	}
+	return (1);
+}
+
+// Check if the time elapsed after the philo last meal
+// is superior to the death time.
+// Return : -1 (error), 0 (not dead), 1 (dead)
 int	check_death(t_philo *philo)
 {
 	long	time;

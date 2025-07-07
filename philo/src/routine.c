@@ -6,12 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/07/04 14:09:58 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:26:03 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Loop until the philo died.
+// (Special case for one fork in the table)
 void	*philo_alone(void *data)
 {
 	t_philo	*philo;
@@ -30,6 +32,8 @@ void	*philo_alone(void *data)
 	return (NULL);
 }
 
+// Loop while the simulation is running and the philo isn't full.
+// routine : eat, sleep, think.
 void	*philo_routine(void *data)
 {
 	t_philo	*philo;
@@ -41,6 +45,8 @@ void	*philo_routine(void *data)
 		return (NULL);
 	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND)))
 		return (NULL);
+	if (!adapt_fairness(philo))
+		return (NULL);
 	while (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == -1)
 	{
 		if (philo->full == 1)
@@ -49,11 +55,13 @@ void	*philo_routine(void *data)
 		if (!write_status(philo, SLEEP)
 			|| !philo_usleep(philo->sim->stgs.sleep_time, philo->sim))
 			return (NULL);
-		think(philo);
+		think(philo, 0);
 	}
 	return (NULL);
 }
 
+// Loop while the simulation is running and all philos are alive.
+// If a philo died, show is "DEAD" status and stop the simulation.
 void	*monitor_routine(void *data)
 {
 	int		i;

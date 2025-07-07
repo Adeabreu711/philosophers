@@ -6,13 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:49:24 by alex              #+#    #+#             */
-/*   Updated: 2025/07/02 16:10:07 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/07 13:34:11 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/time.h"
 #include <stdio.h>
 
+// Get time int the given unit.
 long	get_time(t_time_unit unit)
 {
 	struct timeval	tmvl;
