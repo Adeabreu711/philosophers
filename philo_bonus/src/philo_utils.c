@@ -6,11 +6,11 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/08 12:51:00 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/08 14:04:54 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 // Wait with precision using usleep in a more accurate way.
 // Usleep is used until a treshold limit, after that CPU is used (busy waiting).
@@ -22,10 +22,6 @@ int	philo_usleep(long usec, t_sim *sim)
 	start = get_time(MICROSECOND);
 	while (1)
 	{
-		if (get_imtx(&sim->mtx, &sim->end_sim) == 1)
-			return (2);
-		if (!get_imtx(&sim->mtx, &sim->end_sim))
-			return (0);
 		rem = usec - (get_time(MICROSECOND) - start);
 		if (rem <= 0)
 			break ;
@@ -42,15 +38,13 @@ int	philo_usleep(long usec, t_sim *sim)
 // Lock and unlock the simulation main mutex.
 int	eat(t_philo *philo)
 {
-	if (get_imtx(&philo->sim->mtx, &philo->sim->end_sim) == 1)
-		return (0);
-	if (pthread_mutex_lock(&philo->f_fork->mtx)
+	if (sem_wait(philo->sim->forks_sem) == -1
 		|| !write_status(philo, GRAB_F_FORK))
 		return (0);
-	if (pthread_mutex_lock(&philo->s_fork->mtx)
+	if (sem_wait(philo->sim->forks_sem) == -1
 		|| !write_status(philo, GRAB_S_FORK))
 		return (0);
-	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND))
+	if (!set_lsem(&philo->sem, &philo->last_meal_time, get_time(MILLISECOND))
 		|| !write_status(philo, EAT))
 		return (0);
 	philo->eat_count++;
@@ -59,11 +53,12 @@ int	eat(t_philo *philo)
 	if (philo->sim->stgs.max_meals > 0
 		&& philo->eat_count == philo->sim->stgs.max_meals)
 	{
-		if (!set_imtx(&philo->mtx, &philo->full, 1))
+		if (!set_isem(&philo->sem, &philo->full, 1))
 			return (0);
 	}
-	if (pthread_mutex_unlock(&philo->f_fork->mtx)
-		|| pthread_mutex_unlock(&philo->s_fork->mtx))
+	if (sem_post(philo->sim->forks_sem) == -1)
+		return (0);
+	if (sem_post(philo->sim->forks_sem) == -1)
 		return (0);
 	return (1);
 }
@@ -97,24 +92,23 @@ int	write_status(t_philo *philo, t_status status)
 
 	if (philo->full)
 		return (1);
-	if (pthread_mutex_lock(&philo->sim->output_mtx))
+	if (sem_wait(philo->sim->output_sem) == -1)
 		return (0);
-	end_sim = get_imtx(&philo->sim->mtx, &philo->sim->end_sim);
 	time = get_time(MILLISECOND)
-		- get_lmtx(&philo->sim->mtx, &philo->sim->start_time);
-	if (!end_sim || time < 0)
-		return (0);
-	if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
+		- get_lsem(philo->sim->global_sem, &philo->sim->start_time);
+	if (time < 0)
+		return (sem_post(philo->sim->output_sem), 0);
+	if ((status == GRAB_F_FORK || status == GRAB_S_FORK))
 		printf("%li %i has taken a fork\n", time, philo->id);
-	else if (status == EAT && end_sim == -1)
+	else if (status == EAT)
 		printf("%li %i is eating\n", time, philo->id);
-	else if (status == SLEEP && end_sim == -1)
+	else if (status == SLEEP )
 		printf("%li %i is sleeping\n", time, philo->id);
-	else if (status == THINK && end_sim == -1)
+	else if (status == THINK)
 		printf("%li %i is thinking\n", time, philo->id);
 	else if (status == DEAD)
 		printf("%li %i died\n", time, philo->id);
-	if (pthread_mutex_unlock(&philo->sim->output_mtx))
+	if (sem_post(philo->sim->output_sem) == -1)
 		return (0);
 	return (1);
 }
