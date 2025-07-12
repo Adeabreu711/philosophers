@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:03:45 by alex              #+#    #+#             */
-/*   Updated: 2025/07/07 13:33:15 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:46:48 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	synchronize_threads(t_sim *sim, int value)
 	return (1);
 }
 
-// Create a time interval between pair philos and odds
+// Create a time interval between pair and odds philos
 int	adapt_fairness(t_philo *philo)
 {
 	if (philo->sim->stgs.philo_nb % 2 == 0)

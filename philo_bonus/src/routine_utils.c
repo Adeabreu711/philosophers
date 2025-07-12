@@ -6,20 +6,21 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:03:45 by alex              #+#    #+#             */
-/*   Updated: 2025/07/08 14:54:21 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 15:38:10 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
 // Create a time interval between pair philos and odds
+// Returns 1 on success, 0 on failure.
 int	adapt_fairness(t_philo *philo)
 {
 	if (philo->sim->stgs.philo_nb % 2 == 0)
 	{
 		if (philo->id % 2 == 0)
 		{
-			if (!philo_usleep(3e4, philo->sim))
+			if (!philo_usleep(3e4))
 				return (0);
 		}
 	}
@@ -34,9 +35,8 @@ int	adapt_fairness(t_philo *philo)
 	return (1);
 }
 
-// Check if the time elapsed after the philo last meal
-// is superior to the death time.
-// Return : -1 (error), 0 (not dead), 1 (dead)
+// Check if the philosopher has exceeded time to die.
+// Returns: -1 (error), 0 (alive), 1 (dead).
 int	check_death(t_philo *philo)
 {
 	long	time;
@@ -53,16 +53,32 @@ int	check_death(t_philo *philo)
 	return (0);
 }
 
-int	kill_all_process(t_sim *sim)
+// Report philosopher death and notify end of simulation.
+// Returns 1 on success, 0 on failure.
+int	send_death_report(t_philo *philo)
+{
+	if (!write_status(philo, DEAD))
+		return (0);
+	if (sem_wait(philo->sim->output_sem))
+		return (0);
+	if (sem_post(philo->sim->end_sem))
+		return (0);
+	return (1);
+}
+
+// Kill all philosopher processes and release output lock.
+// Returns 1 on success, 0 on failure.
+int	kill_all_child(t_sim *sim)
 {
 	int	i;
 
 	i = -1;
 	while (++i < sim->stgs.philo_nb)
 	{
-		kill(sim->philo[i].pid, SIGKILL);
+		if (kill(sim->philo[i].pid, SIGKILL))
+			continue ;
 	}
-	
 	if (sem_post(sim->output_sem) == -1)
 		return (0);
+	return (1);
 }

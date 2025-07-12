@@ -6,7 +6,7 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/07/04 14:18:25 by alex             ###   ########.fr        #
+#    Updated: 2025/07/12 14:50:48 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS = -g3 -Wall -Wextra -Werror
 
 SRC = \
 	main.c func_utils.c parsing.c init_table.c simulation.c \
-	mutex_utils.c routine.c time_utils.c philo_utils.c routine_utils.c
+	mutex_utils.c routine.c time_utils.c philo_utils.c routine_utils.c \
+	status.c debug.c
 
 INCLUDES = -Iincludes/
 
@@ -48,4 +49,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY = all clean fclean re
+debug: CFLAGS += -DDEBUG=1
+debug: re
+
+.PHONY = all clean fclean re debug

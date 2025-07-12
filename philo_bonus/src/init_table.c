@@ -6,26 +6,27 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/08 16:11:45 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 15:15:53 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-static int	init_forks_sem(t_sim *sim)
+// Initialize all simulation semaphores.
+static int	init_sim_sems(t_sim *sim)
 {
-	sem_unlink("/sem_forks");
-	sem_unlink("/sem_output");
-	sim->forks_sem = sem_open("/sem_forks", O_CREAT, 0644, sim->stgs.philo_nb);
-	if (sim->forks_sem == SEM_FAILED)
-		return (0);
-	sim->output_sem = sem_open("/sem_output", O_CREAT, 0644, 1);
-	if (sim->output_sem == SEM_FAILED)
+	create_sem(&sim->forks_sem, "/forks_sem", sim->stgs.philo_nb);
+	create_sem(&sim->output_sem, "/output_sem", 1);
+	create_sem(&sim->start_sem, "/start_sem", 0);
+	create_sem(&sim->end_sem, "/end_sem", 0);
+	create_sem(&sim->global_sem, "/global_sem", 1);
+	if (!sim->start_sem || !sim->end_sem || !sim->global_sem
+		|| !sim->forks_sem || !sim->output_sem)
 		return (0);
 	return (1);
 }
 
-// Initialize all philos variables.
+// Initialize all philosopher variables.
 static int	init_philos(t_sim *sim)
 {
 	int	i;
@@ -51,22 +52,12 @@ static int	init_philos(t_sim *sim)
 // Initialize all the simulation "sim" struct.
 int	init_table(t_sim *sim)
 {
-	sem_unlink("/start_sem");
-	sem_unlink("/end_sem");
-	sem_unlink("/global_sem");
-	sim->start_sem = sem_open("/start_sem", O_CREAT | O_EXCL, 0644, 0);
-	if (sim->start_sem == SEM_FAILED)
-		return (0);
-	sim->global_sem= sem_open("/global_sem", O_CREAT | O_EXCL, 0644, 1);
-	if (sim->global_sem == SEM_FAILED)
-		return (0);
-	sim->end_sem = sem_open("/end_sem", O_CREAT | O_EXCL, 0644, 0);
-	if (sim->end_sem == SEM_FAILED)
-		return (0);
 	sim->start_time = -1;
-	if (!init_forks_sem(sim))
+	if (!init_sim_sems(sim))
 		return (0);
 	if (!init_philos(sim))
 		return (0);
+	if (DEBUG)
+		debug_sim(sim);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:23:05 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/05 13:23:25 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:45:08 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	add_imtx(t_mtx *mtx, int *addr, const int to_add)
 	return (1);
 }
 
-// Return 1 on success, 0 on failure.
+// Set an int protected by a mutex. Return 0 on failure.
 int	set_imtx(t_mtx *mtx, int *addr, const int new_nb)
 {
 	if (pthread_mutex_lock(mtx))
@@ -35,7 +35,7 @@ int	set_imtx(t_mtx *mtx, int *addr, const int new_nb)
 	return (1);
 }
 
-// Return 1 on success, 0 on failure.
+// Set an long int protected by a mutex. Return 0 on failure.
 int	set_lmtx(t_mtx *mtx, long *addr, const long new_nb)
 {
 	if (pthread_mutex_lock(mtx))
@@ -46,7 +46,7 @@ int	set_lmtx(t_mtx *mtx, long *addr, const long new_nb)
 	return (1);
 }
 
-// Return addr value on success, 0 on failure.
+// Get an int protected by a mutex. Return 0 on failure.
 int	get_imtx(t_mtx *mtx, int *addr)
 {
 	int	nb;
@@ -59,7 +59,7 @@ int	get_imtx(t_mtx *mtx, int *addr)
 	return (nb);
 }
 
-// Return addr value on success, 0 on failure.
+// Get an long int protected by a mutex. Return 0 on failure.
 long	get_lmtx(t_mtx *mtx, long *addr)
 {
 	long	nb;

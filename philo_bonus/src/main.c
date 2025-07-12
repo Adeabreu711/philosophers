@@ -6,14 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:40:31 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/08 16:54:17 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/09 21:42:49 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
 // Free all the allocated memory in the simulation struct.
-int	free_sim(t_sim *sim)
+static int	free_sim(t_sim *sim)
 {
 	if (!sim)
 		return (0);
@@ -38,8 +38,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	if (!parse_settings(&sim->stgs, argc, argv) || !init_table(sim))
 		return (free_sim(sim), 0);
-	// if (!simulate_table(sim))
-	// 	return (free_sim(sim), 0);
-	simulate_test(sim);
+	if (!simulate_table(sim))
+		return (free_sim(sim), 0);
 	return (free_sim(sim), 1);
 }

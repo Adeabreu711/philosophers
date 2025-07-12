@@ -6,14 +6,15 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 15:49:24 by alex              #+#    #+#             */
-/*   Updated: 2025/07/08 13:12:00 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/09 15:53:02 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/time.h"
 #include <stdio.h>
 
-// Get time int the given unit.
+// Get current time converted to the given unit.
+// Returns -1 on invalid unit or 0 on gettimeofday failure.
 long	get_time(t_time_unit unit)
 {
 	struct timeval	tmvl;

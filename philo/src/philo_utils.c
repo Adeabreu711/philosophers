@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/08 12:51:00 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 14:39:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,15 @@ int	write_status(t_philo *philo, t_status status)
 	if (!end_sim || time < 0)
 		return (0);
 	if ((status == GRAB_F_FORK || status == GRAB_S_FORK) && end_sim == -1)
-		printf("%li %i has taken a fork\n", time, philo->id);
+		print_grab_status(time, philo, status);
 	else if (status == EAT && end_sim == -1)
-		printf("%li %i is eating\n", time, philo->id);
+		print_eat_status(philo->sim, time, philo->id);
 	else if (status == SLEEP && end_sim == -1)
-		printf("%li %i is sleeping\n", time, philo->id);
+		print_sleep_status(time, philo->id);
 	else if (status == THINK && end_sim == -1)
-		printf("%li %i is thinking\n", time, philo->id);
+		print_think_status(time, philo->id);
 	else if (status == DEAD)
-		printf("%li %i died\n", time, philo->id);
+		print_death_status(time, philo->id);
 	if (pthread_mutex_unlock(&philo->sim->output_mtx))
 		return (0);
 	return (1);

@@ -6,17 +6,18 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/07/07 20:46:39 by alex             ###   ########.fr        #
+#    Updated: 2025/07/12 15:36:40 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 CC = cc
-CFLAGS = -g3 #-Wall -Wextra -Werror
+CFLAGS = -g3 -Wall -Wextra -Werror
 
 SRC = \
-	main.c func_utils.c parsing.c init_table.c simulation_test.c \
-	time_utils.c routine.c sem_utils.c routine_utils.c philo_utils.c\
+	main.c func_utils.c parsing.c init_table.c simulation.c \
+	sem_utils.c routine.c sem_getset.c routine_utils.c philo_utils.c \
+	time_utils.c status.c debug.c
 
 INCLUDES = -Iincludes/
 
@@ -48,4 +49,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY = all clean fclean re
+debug: CFLAGS += -DDEBUG=1
+debug: re
+
+.PHONY = all clean fclean re debug

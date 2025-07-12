@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:46:10 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/08 16:30:00 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/09 16:01:38 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define ER_FRMT "\033[31mError :\033[0m wrong format in arguments\n"
 
 // Check if the given args are valid.
-// return 1 if valid, else return 0.
+// Return 1 if valid, else return 0.
 static int	check_args(int argc, char *argv[])
 {
 	int	i;

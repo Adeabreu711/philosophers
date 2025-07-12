@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/07 13:25:47 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 15:38:42 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <pthread.h>
 # include "time.h"
 # include <limits.h>
+
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
 
 typedef pthread_mutex_t	t_mtx;
 typedef pthread_t		t_thread;
@@ -34,7 +38,6 @@ typedef enum e_status
 	DEAD,
 }	t_status;
 
-//./philo [philo_nb] [die_time] [eat_time] [sleep_time] ([max_meals])
 typedef struct s_stgs
 {
 	int		philo_nb;
@@ -116,9 +119,16 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 long	ft_atol(const char *nptr);
 
+//STATUS
+
+int		print_eat_status(t_sim *sim, long time, int id);
+int		print_sleep_status(long time, int id);
+int		print_think_status(long time, int id);
+int		print_death_status(long time, int id);
+int		print_grab_status(long time, t_philo *philo, t_status status);
+
 //DEBUG
 
-void	debug_stgs(t_stgs *stgs);
-void	debug_philo(t_sim *sim);
+void	debug_sim(t_sim *sim);
 
 #endif

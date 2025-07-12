@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/07 13:42:31 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 14:54:30 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ int	init_table(t_sim *sim)
 		return (0);
 	if (!init_philos(sim))
 		return (0);
+	if (DEBUG)
+		debug_sim(sim);
 	return (1);
 }

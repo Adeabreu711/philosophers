@@ -6,15 +6,15 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/08 14:04:54 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/12 15:26:33 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-// Wait with precision using usleep in a more accurate way.
-// Usleep is used until a treshold limit, after that CPU is used (busy waiting).
-int	philo_usleep(long usec, t_sim *sim)
+// Sleep with high precision.
+// Uses usleep until a low threshold, then busy-waits.
+int	philo_usleep(long usec)
 {
 	long	start;
 	long	rem;
@@ -33,22 +33,22 @@ int	philo_usleep(long usec, t_sim *sim)
 	return (1);
 }
 
-// Print the "GRAP FORK" and "EAT" status of the given philo if not full.
-// Uptate the philo eat counter and last meal time.
-// Lock and unlock the simulation main mutex.
+// Philosopher takes two forks, eats, updates state, then releases forks.
+// Updates last_meal_time and increments eat_count.
+// Marks philosopher as full if max_meals is reached.
 int	eat(t_philo *philo)
 {
 	if (sem_wait(philo->sim->forks_sem) == -1
-		|| !write_status(philo, GRAB_F_FORK))
+		|| !write_status(philo, GRAB_FORK))
 		return (0);
 	if (sem_wait(philo->sim->forks_sem) == -1
-		|| !write_status(philo, GRAB_S_FORK))
+		|| !write_status(philo, GRAB_FORK))
 		return (0);
 	if (!set_lsem(&philo->sem, &philo->last_meal_time, get_time(MILLISECOND))
 		|| !write_status(philo, EAT))
 		return (0);
 	philo->eat_count++;
-	if (!philo_usleep(philo->sim->stgs.eat_time, philo->sim))
+	if (!philo_usleep(philo->sim->stgs.eat_time))
 		return (0);
 	if (philo->sim->stgs.max_meals > 0
 		&& philo->eat_count == philo->sim->stgs.max_meals)
@@ -63,7 +63,8 @@ int	eat(t_philo *philo)
 	return (1);
 }
 
-// Print the "THINK" status of the given philo.
+// Philosopher thinks. If total philo is odd, wait a bit.
+// If not init call (init == 0), print thinking status.
 int	think(t_philo *philo, int init)
 {
 	int	think_time;
@@ -78,16 +79,15 @@ int	think(t_philo *philo, int init)
 	think_time = philo->sim->stgs.eat_time * 2 - philo->sim->stgs.sleep_time;
 	if (think_time < 0)
 		return (1);
-	if (!philo_usleep(0.25 * think_time, philo->sim))
+	if (!philo_usleep(0.25 * think_time))
 		return (0);
 	return (1);
 }
 
-// Print the status of the given philo if the simulation is running.
-// Lock and unlock the output mutex.
+// Display philosopher action with timestamp.
+// Output is protected with semaphore to prevent race.
 int	write_status(t_philo *philo, t_status status)
 {
-	int		end_sim;
 	long	time;
 
 	if (philo->full)
@@ -98,16 +98,16 @@ int	write_status(t_philo *philo, t_status status)
 		- get_lsem(philo->sim->global_sem, &philo->sim->start_time);
 	if (time < 0)
 		return (sem_post(philo->sim->output_sem), 0);
-	if ((status == GRAB_F_FORK || status == GRAB_S_FORK))
-		printf("%li %i has taken a fork\n", time, philo->id);
+	if ((status == GRAB_FORK))
+		print_grab_status(time, philo);
 	else if (status == EAT)
-		printf("%li %i is eating\n", time, philo->id);
-	else if (status == SLEEP )
-		printf("%li %i is sleeping\n", time, philo->id);
+		print_eat_status(time, philo, philo->id);
+	else if (status == SLEEP)
+		print_sleep_status(time, philo->id);
 	else if (status == THINK)
-		printf("%li %i is thinking\n", time, philo->id);
+		print_think_status(time, philo->id);
 	else if (status == DEAD)
-		printf("%li %i died\n", time, philo->id);
+		print_death_status(time, philo->id);
 	if (sem_post(philo->sim->output_sem) == -1)
 		return (0);
 	return (1);
