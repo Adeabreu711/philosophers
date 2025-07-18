@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/12 15:26:33 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:15:32 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	write_status(t_philo *philo, t_status status)
 		- get_lsem(philo->sim->global_sem, &philo->sim->start_time);
 	if (time < 0)
 		return (sem_post(philo->sim->output_sem), 0);
-	if ((status == GRAB_FORK))
+	if (status == GRAB_FORK)
 		print_grab_status(time, philo);
 	else if (status == EAT)
 		print_eat_status(time, philo, philo->id);

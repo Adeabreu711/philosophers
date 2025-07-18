@@ -3,24 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:03:45 by alex              #+#    #+#             */
-/*   Updated: 2025/07/09 21:46:48 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/18 16:56:53 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-// Loop until the given threads_ready value is reached.
-// Threads_ready == 0 is an error.
-int	synchronize_threads(t_sim *sim, int value)
+// Loop until the start time isn't crossed.
+void	wait_start(long start_time)
 {
-	if (!get_imtx(&sim->mtx, &sim->threads_ready))
-		return (0);
-	while (get_imtx(&sim->mtx, &sim->threads_ready) < value)
-		continue ;
-	return (1);
+	while (start_time > get_time(MILLISECOND))
+		usleep(100);
 }
 
 // Create a time interval between pair and odds philos

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 22:05:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/12 14:39:38 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/16 19:11:24 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	philo_usleep(long usec, t_sim *sim)
 		if (rem > 1e3)
 			usleep(rem / 2);
 		else
-			continue ;
+			usleep(100);
 	}
 	return (1);
 }

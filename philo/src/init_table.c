@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 19:46:06 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/12 14:54:30 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/18 16:42:14 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	init_philos(t_sim *sim)
 			return (0);
 		sim->philo[i].id = i + 1;
 		sim->philo[i].eat_count = 0;
-		sim->philo[i].last_meal_time = -1;
+		sim->philo[i].last_meal_time = sim->start_time;
 		sim->philo[i].full = 0;
 		sim->philo[i].sim = sim;
 		set_forks_addr(sim->philo, sim->fork, i, sim->stgs.philo_nb);
@@ -72,8 +72,7 @@ static int	init_philos(t_sim *sim)
 int	init_table(t_sim *sim)
 {
 	sim->end_sim = -1;
-	sim->start_time = -1;
-	sim->threads_ready = -1;
+	sim->start_time = get_time(MILLISECOND) + (sim->stgs.philo_nb * 20);
 	if (pthread_mutex_init(&sim->mtx, NULL))
 		return (0);
 	if (!init_forks(sim))

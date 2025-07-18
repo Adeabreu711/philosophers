@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/07/10 12:49:15 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/18 16:43:05 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	*philo_alone(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (!synchronize_threads(philo->sim, 1))
-		return (NULL);
-	if (!add_imtx(&philo->sim->mtx, &philo->sim->threads_ready, 1))
-		return (NULL);
+	wait_start(philo->last_meal_time);
 	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND)))
 		return (NULL);
 	if (!write_status(philo, GRAB_F_FORK))
@@ -39,10 +36,7 @@ void	*philo_routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (!synchronize_threads(philo->sim, 1))
-		return (NULL);
-	if (!add_imtx(&philo->sim->mtx, &philo->sim->threads_ready, 1))
-		return (NULL);
+	wait_start(philo->last_meal_time);
 	if (!set_lmtx(&philo->mtx, &philo->last_meal_time, get_time(MILLISECOND)))
 		return (NULL);
 	if (!adapt_fairness(philo))
@@ -69,8 +63,7 @@ void	*monitor_routine(void *data)
 
 	i = -1;
 	sim = data;
-	if (!synchronize_threads(sim, sim->stgs.philo_nb + 1))
-		return (NULL);
+	wait_start(sim->start_time);
 	while (get_imtx(&sim->mtx, &sim->end_sim) == -1)
 	{
 		while (++i < sim->stgs.philo_nb)
@@ -83,6 +76,7 @@ void	*monitor_routine(void *data)
 				break ;
 			}
 		}
+		usleep(100);
 		i = -1;
 	}
 	return (NULL);

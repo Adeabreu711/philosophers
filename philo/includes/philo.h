@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/12 15:38:42 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/18 16:41:50 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ struct	s_sim
 	t_mtx		output_mtx;
 	t_thread	monitor;
 	long		start_time;
-	int			threads_ready;
 	int			end_sim;
 };
 
@@ -90,7 +89,7 @@ void	*monitor_routine(void *data);
 //ROUTINE UTILS
 
 int		adapt_fairness(t_philo *philo);
-int		synchronize_threads(t_sim *sim, int value);
+void	wait_start(long start_time);
 int		check_death(t_philo *philo);
 
 //PARSING
