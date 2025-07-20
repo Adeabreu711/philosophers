@@ -6,13 +6,13 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 15:08:31 by alde-abr          #+#    #+#              #
-#    Updated: 2025/07/12 15:36:40 by alex             ###   ########.fr        #
+#    Updated: 2025/07/20 15:06:54 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_bonus
 CC = cc
-CFLAGS = -g3 -Wall -Wextra -Werror
+CFLAGS = -g3 #-Wall -Wextra -Werror
 
 SRC = \
 	main.c func_utils.c parsing.c init_table.c simulation.c \

@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 19:31:56 by alde-abr          #+#    #+#             */
-/*   Updated: 2025/07/12 15:38:34 by alex             ###   ########.fr       */
+/*   Updated: 2025/07/20 14:10:53 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # endif
 
 typedef struct s_sim	t_sim;
+typedef pthread_t		t_thread;
 
 typedef enum e_status
 {
@@ -57,6 +58,7 @@ typedef struct s_philo
 	pid_t		pid;
 	sem_t		sem;
 	t_sim		*sim;
+	t_thread	monitor;
 }	t_philo;
 
 struct	s_sim
