@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.fr>             +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:53:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/20 15:32:19 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:14:45 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@
 // Returns 1 on success, 0 if waitpid fails.
 int	wait_philo_end(t_sim *sim)
 {
-	sem_wait(sim->end_sem);
+	int	i;
+
+	i = -1;
+	while(++ i < sim->stgs.philo_nb)
+	{
+		if (sem_wait(sim->end_sem) == -1)
+			return (0);
+	}
 	kill_all_child(sim);
 	return (1);
 }
