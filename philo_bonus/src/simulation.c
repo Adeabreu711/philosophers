@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 15:53:38 by alex              #+#    #+#             */
-/*   Updated: 2025/07/22 16:14:45 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:45:02 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	wait_philo_end(t_sim *sim)
 	int	i;
 
 	i = -1;
-	while(++ i < sim->stgs.philo_nb)
+	while (++ i < sim->stgs.philo_nb)
 	{
 		if (sem_wait(sim->end_sem) == -1)
 			return (0);

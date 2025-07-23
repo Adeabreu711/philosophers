@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 16:44:58 by alex              #+#    #+#             */
-/*   Updated: 2025/07/22 16:18:20 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:44:43 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ void	*philo_routine(void *data)
 void	*monitor_routine(void *data)
 {
 	t_philo	*philo;
-	int	i;
+	int		i;
 
 	i = -1;
 	philo = data;
 	while (1)
 	{
-
 		if (philo->full)
 		{
 			sem_post(philo->sim->end_sem);
@@ -63,10 +62,7 @@ void	*monitor_routine(void *data)
 			write_status(philo, DEAD);
 			sem_wait(philo->sim->output_sem);
 			while (++i < philo->sim->stgs.philo_nb)
-			{
-				if (sem_post(philo->sim->end_sem))
-					return (NULL);
-			}
+				sem_post(philo->sim->end_sem);
 			break ;
 		}
 		usleep(100);
